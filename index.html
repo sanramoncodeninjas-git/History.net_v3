@@ -768,6 +768,61 @@
       .footer-grid { grid-template-columns: 1fr; }
       .cart-drawer { width: 100%; }
     }
+
+    #showScratch {
+    padding-top: 10px;
+    padding-bottom: 40px;
+    padding-left: 50px;
+    background: white;
+    width: 300px;
+    height: 26px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  #scratchContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 20px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+  }
+
+  iframe {
+      padding-right: 10px;
+      flex-shrink: 0;
+      position: relative;
+      flex: 0 0 auto;
+  }
+
+  .load-more-card {
+      flex: 0 0 auto;
+      width: 180px;
+      height: 200px;
+      margin-top: 101px;
+      margin-bottom: 101px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #333;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+  }
+
+  .card-title {
+      color: Gray;
+      width: 479px;
+      text-align: center;
+      font-size: 20px;
+      margin: 0;
+      transform: translateY(-396px);
+  }
   </style>
 </head>
 <body>
@@ -784,13 +839,6 @@
       <li><a href="#">MORE BEIZZMNESS</a></li>
       <li><a href="#">ABOUT BEIZZMNESS</a></li>
     </ul>
-    <div class="nav-actions">
-      <button title="Search">🔍</button>
-      <button title="Wishlist">♡</button>
-      <button id="cart-btn" title="Cart">
-        🛍
-        <span class="cart-count" id="cart-count">0</span>
-      </button>
     </div>
   </nav>
 
@@ -802,133 +850,93 @@
       <p class="hero-eyebrow">NONE OF YOUR BEIZZMNESS</p>
       <h1>NONE OF YOUR BEIZZMNESS<em>
       <p>I SAID NONE OF YOUR BIZZMNESS.</p>
-      <a href="#shop" class="btn-primary">GO TO YOUR BEIZZMNESS</a>
     </div>
   </section>
 
-  <!-- Categories -->
-  <section class="categories" id="categories">
-    <div class="section-header animate-in">
-      <div>
-        <p class="section-label">Browse by</p>
-        <h2 class="section-title">Collections</h2>
-      </div>
-      <a href="#" class="section-link">View all →</a>
-    </div>
-    <div class="category-grid">
-      <a class="cat-card cat-1" href="#">
-        <div class="cat-bg"></div>
-        <div class="cat-overlay"><span class="cat-name">Home &amp; Living</span></div>
-      </a>
-      <a class="cat-card cat-2" href="#">
-        <div class="cat-bg"></div>
-        <div class="cat-overlay"><span class="cat-name">Garden &amp; Outdoor</span></div>
-      </a>
-      <a class="cat-card cat-3" href="#">
-        <div class="cat-bg"></div>
-        <div class="cat-overlay"><span class="cat-name">Ceramics &amp; Clay</span></div>
-      </a>
-      <a class="cat-card cat-4" href="#">
-        <div class="cat-bg"></div>
-        <div class="cat-overlay"><span class="cat-name">Textiles</span></div>
-      </a>
-    </div>
-  </section>
+  <section id="scratch">
+        <h1>Scratch Embeds</h1>
+        <div id="showScratch">Click me!</div>
+        <div id="scratchContainer">
+            
 
-  <!-- Products -->
-  <section class="products" id="shop">
-    <div class="section-header animate-in">
-      <div>
-        <p class="section-label">Handpicked</p>
-        <h2 class="section-title">Featured Items</h2>
-      </div>
-      <a href="#" class="section-link">Shop all →</a>
-    </div>
-    <div class="product-grid" id="product-grid">
-      <!-- Products injected by JS -->
-    </div>
-  </section>
+            
+        </div>
+        
+        <script>
+        let currentIndex = 0;
+        const batchSize = 3;
 
-  <!-- Promo Banner -->
-  <div class="banner animate-in">
-    <div class="banner-text">
-      <p class="banner-eyebrow">Limited Time</p>
-      <h2>End of Season<br>Sale</h2>
-      <p>Up to 40% off selected items — while stocks last.</p>
-    </div>
-    <a href="#" class="btn-primary" style="white-space:nowrap">Shop the Sale</a>
-  </div>
+        const container = document.getElementById("scratchContainer");
+        const startButton = document.getElementById("showScratch");
+        
+        const sources = ["1272766214", "1319945211"];
+                         
+        const titles = ["Ultimante Soccer 1v1", "1v1 To The Death"];
 
-  <!-- Features -->
-  <div class="features">
-    <div class="feature animate-in">
-      <div class="feature-icon">🚚</div>
-      <h4>Free Shipping</h4>
-      <p>On all domestic orders over $75.</p>
-    </div>
-    <div class="feature animate-in" style="transition-delay:0.1s">
-      <div class="feature-icon">↩</div>
-      <h4>Easy Returns</h4>
-      <p>30-day hassle-free return policy.</p>
-    </div>
-    <div class="feature animate-in" style="transition-delay:0.2s">
-      <div class="feature-icon">🔒</div>
-      <h4>Secure Checkout</h4>
-      <p>Your data is always protected.</p>
-    </div>
-    <div class="feature animate-in" style="transition-delay:0.3s">
-      <div class="feature-icon">✦</div>
-      <h4>Sustainably Sourced</h4>
-      <p>Every piece is ethically made.</p>
-    </div>
-  </div>
+        function loadBatch() {
 
-  <!-- Newsletter -->
-  <section class="newsletter">
-    <h3>Join the Community</h3>
-    <p>New arrivals, stories, and restocks — straight to your inbox.</p>
-    <form class="newsletter-form" onsubmit="return false;">
-      <input type="email" placeholder="your@email.com" />
-      <button class="btn-primary" type="submit">Subscribe</button>
-    </form>
-  </section>
+            const oldButton = document.getElementById("loadMoreCard");
+            if (oldButton) {
+                oldButton.remove();
+            }
 
+            for (let i = 0; i < batchSize && currentIndex < sources.length; i++) {
+
+                const id = sources[currentIndex];
+
+                const iframe = document.createElement("iframe");
+
+                iframe.src = "https://scratch.mit.edu/projects/" + id + "/embed";
+                iframe.width = "485";
+                iframe.height = "402";
+                iframe.style.border = "none";
+                iframe.allowFullscreen = true;
+
+                const card = document.createElement("div");
+                card.className = "card";
+                
+                const title = document.createElement("p");
+                title.innerHTML = titles[currentIndex];
+                title.className = "card-title";
+                
+                card.appendChild(iframe);
+                container.appendChild(card);
+                card.appendChild(title);
+
+                
+                currentIndex++;
+            }
+
+            // add load-more button if more remain
+            if (currentIndex < sources.length) {
+
+                const loadMore = document.createElement("div");
+
+                loadMore.id = "loadMoreCard";
+                loadMore.className = "load-more-card";
+                loadMore.textContent = "Load More";
+
+                loadMore.addEventListener("click", loadBatch);
+
+                container.appendChild(loadMore);
+            }
+        }
+
+startButton.addEventListener("click", () => {
+
+    startButton.remove();
+
+    loadBatch();
+});
+        </script>
+    </section>
+  
   <!-- Footer -->
   <footer>
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#" class="nav-logo">Dev is the Best</a>
-        <p>A carefully curated shop for objects that belong in a considered home. Rooted in craft and mindful of longevity.</p>
-      </div>
-      <div class="footer-col">
-        <h5>Shop</h5>
-        <ul>
-          <li><a href="#">New Arrivals</a></li>
-          <li><a href="#">Home & Living</a></li>
-          <li><a href="#">Ceramics</a></li>
-          <li><a href="#">Textiles</a></li>
-          <li><a href="#">Sale</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Help</h5>
-        <ul>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Shipping Policy</a></li>
-          <li><a href="#">Returns</a></li>
-          <li><a href="#">Track Order</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Sustainability</a></li>
-          <li><a href="#">Journal</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Careers</a></li>
-        </ul>
+        <p>Dev is the best.</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -968,91 +976,6 @@
       { id:7, name:"Wool Felt Trivet", category:"Kitchen", price:18, emoji:"⬡", badge:null },
       { id:8, name:"Pressed Wildflower Frame", category:"Home", price:62, emoji:"🌿", badge:"New" },
     ];
-
-    // ── Render Products ──
-    const grid = document.getElementById('product-grid');
-    products.forEach((p, i) => {
-      const badgeHtml = p.badge
-        ? `<span class="product-badge${p.badge==='Sale'?' sale':''}">${p.badge}</span>`
-        : '';
-      const priceHtml = p.oldPrice
-        ? `<span class="old-price">$${p.oldPrice}</span>$${p.price}`
-        : `$${p.price}`;
-      grid.innerHTML += `
-        <div class="product-card animate-in" style="transition-delay:${i*0.06}s">
-          <div class="product-img">
-            <div class="product-img-bg" style="background:${['#d4c5b5','#b5c8c0','#c8b5a8','#b8b5c8','#c8c0b5','#b5c0b8','#c5b8b0','#bfb8c8'][i]};display:flex;align-items:center;justify-content:center;font-size:3.5rem;">
-              ${p.emoji}
-            </div>
-            ${badgeHtml}
-            <button class="product-wishlist" title="Add to wishlist">♡</button>
-          </div>
-          <div class="product-info">
-            <p class="product-category">${p.category}</p>
-            <p class="product-name">${p.name}</p>
-            <div class="product-footer">
-              <span class="product-price">${priceHtml}</span>
-              <button class="add-to-cart" onclick="addToCart(${p.id})">Add</button>
-            </div>
-          </div>
-        </div>`;
-    });
-
-    // ── Cart Logic ──
-    let cart = [];
-
-    function addToCart(id) {
-      const product = products.find(p => p.id === id);
-      const existing = cart.find(c => c.id === id);
-      if (existing) existing.qty++;
-      else cart.push({ ...product, qty: 1 });
-      updateCart();
-      openCart();
-    }
-
-    function removeFromCart(id) {
-      cart = cart.filter(c => c.id !== id);
-      updateCart();
-    }
-
-    function updateCart() {
-      const count = cart.reduce((s, c) => s + c.qty, 0);
-      const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-      document.getElementById('cart-count').textContent = count;
-      document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
-
-      const body = document.getElementById('cart-body');
-      const footer = document.getElementById('cart-footer');
-      if (cart.length === 0) {
-        body.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
-        footer.style.display = 'none';
-      } else {
-        body.innerHTML = cart.map(c => `
-          <div class="cart-item">
-            <div class="cart-item-img">${c.emoji}</div>
-            <div class="cart-item-info">
-              <p class="cart-item-name">${c.name}</p>
-              <p class="cart-item-price">$${c.price} × ${c.qty}</p>
-              <button class="cart-item-remove" onclick="removeFromCart(${c.id})">Remove</button>
-            </div>
-          </div>`).join('');
-        footer.style.display = 'block';
-      }
-    }
-
-    function openCart() {
-      document.getElementById('cart-drawer').classList.add('open');
-      document.getElementById('cart-overlay').classList.add('open');
-    }
-
-    function closeCart() {
-      document.getElementById('cart-drawer').classList.remove('open');
-      document.getElementById('cart-overlay').classList.remove('open');
-    }
-
-    document.getElementById('cart-btn').addEventListener('click', openCart);
-    document.getElementById('cart-close').addEventListener('click', closeCart);
-    document.getElementById('cart-overlay').addEventListener('click', closeCart);
 
     // ── Scroll Animations ──
     const observer = new IntersectionObserver((entries) => {
